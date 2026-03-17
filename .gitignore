@@ -1,0 +1,18 @@
+# R generated files
+.Rhistory
+.RData
+.Rproj.user/
+*.Rout
+
+# Generated output (figures and tables produced by the scripts)
+output/
+
+# Intermediate RDS objects produced by 01_load_data.R and 02_wrangle_data.R
+data/gene_expression.rds
+data/gene_expression_long.rds
+data/gene_fc.rds
+
+# knitr cache and figures
+reports/*_cache/
+reports/*_files/
+reports/*.html
