@@ -1,0 +1,8 @@
+sample_id,condition,batch,quality_score
+sample_control_1,control,batch1,0.95
+sample_control_2,control,batch1,0.82
+sample_control_3,control,batch2,0.91
+sample_treatment_1,treatment,batch2,0.88
+sample_treatment_2,treatment,batch1,0.93
+sample_treatment_3,treatment,batch1,0.78
+sample_treatment_4,treatment,batch2,0.89
