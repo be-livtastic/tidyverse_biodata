@@ -1,35 +1,34 @@
-# ============================================================
-# 01_load_data.R
-# Purpose: Load and inspect the gene expression dataset
-# ============================================================
+install.packages("tidyverse")
+install.packages("pheatmap")
 
 library(tidyverse)
+library(pheatmap)
+library(ggplot2)
+library(dplyr)
 
-# ----- Load data -----
-data_path <- here::here("data", "gene_expression.csv")
+### Data Wrangling
 
-gene_expr <- read_csv(data_path, show_col_types = FALSE)
+# Load expression data
+expr_data <- read.csv("week2_messy_expression_data.csv")
 
-# ----- Initial inspection -----
-glimpse(gene_expr)
-cat("\nDimensions:", nrow(gene_expr), "genes x", ncol(gene_expr), "columns\n")
+# Load metadata
+metadata <- read.csv("week2_sample_metadata.csv")
 
-# Column names
-cat("\nColumn names:\n")
-print(colnames(gene_expr))
+glimpse(expr_data)
+glimpse(metadata)
 
-# First few rows
-cat("\nFirst 6 rows:\n")
-print(head(gene_expr))
+### Dataset Overview
+# Number of genes (rows) and samples (columns)
+cat("Genes:", nrow(expr_data), "\n")
+cat("Samples:", ncol(expr_data) - 1, "\n") # subtract 1 if first col is gene names # nolint: line_length_linter.
 
-# Check for missing values
-cat("\nMissing values per column:\n")
-print(colSums(is.na(gene_expr)))
+# Samples (columns) with any NAs
+na_per_sample <- colSums(is.na(expr_data))
+cat("Samples with NAs:", sum(na_per_sample > 0), "\n")
+print(na_per_sample[na_per_sample > 0])
 
-# Gene biotype summary
-cat("\nGene biotype counts:\n")
-print(count(gene_expr, gene_biotype))
+# Range of expression values (excluding non-numeric gene name column)
+expr_matrix <- expr_data[, sapply(expr_data, is.numeric)]
+cat("Expression range:", range(expr_matrix, na.rm = TRUE), "\n")
 
-# ----- Save as RDS for downstream scripts -----
-saveRDS(gene_expr, here::here("data", "gene_expression.rds"))
-cat("\nData saved to data/gene_expression.rds\n")
+
