@@ -1,106 +1,123 @@
-# tidyverse_biodata
 
-A hands-on project for **loading, wrangling, summarising, and visualising gene expression data** using the [tidyverse](https://www.tidyverse.org/) ecosystem in R.
-
----
-
-## Project structure
-
-```
-tidyverse_biodata/
-├── tidyverse_biodata.Rproj   # RStudio project file
-├── data/
-│   └── gene_expression.csv   # Simulated log2-normalised RNA-seq dataset
-├── R/
-│   ├── 01_load_data.R        # Load CSV, inspect, save as RDS
-│   ├── 02_wrangle_data.R     # Pivot to long format, compute fold changes
-│   ├── 03_summary_stats.R    # Per-sample and per-gene summary statistics
-│   └── 04_visualize.R        # ggplot2 figures (boxplot, volcano, heatmap, PCA)
-├── reports/
-│   └── gene_expression_report.Rmd  # Self-contained R Markdown report
-└── output/                   # Generated CSV tables and PNG figures (git-ignored)
-```
+**Tidyverse BioData Wrangling: Learning R with Gene Expression Data**
 
 ---
 
-## Dataset
+# Description
 
-`data/gene_expression.csv` contains **50 genes** (47 protein-coding, 3 lncRNA)
-across **6 samples**: three replicates of a *Control* condition
-(`ctrl_rep1–3`) and three replicates of a *Treatment* condition
-(`treat_rep1–3`). Expression values are already on the **log₂ scale**.
+This project was developed as part of my learning journey in tidyverse-based data wrangling and biological data analysis. The focus is on building clean, reproducible workflows for structured research datasets.
 
-| Column | Description |
-|---|---|
-| `gene_id` | Ensembl-style gene identifier |
-| `gene_name` | HGNC gene symbol |
-| `gene_biotype` | `protein_coding` or `lncRNA` |
-| `ctrl_rep1–3` | Log2 expression in control replicates |
-| `treat_rep1–3` | Log2 expression in treatment replicates |
+This repository demonstrates how messy biological datasets can be cleaned, reshaped, and summarized to extract meaningful insights. The workflow includes inspecting data quality, transforming wide datasets into tidy format, and computing summary statistics for genes across experimental conditions.
 
----
+The dataset used here is **AI-generated to simulate a transcriptomics experiment**, allowing safe experimentation with data cleaning and biological interpretation.
 
-## Scripts
+The project highlights practical skills in:
 
-Run the scripts in order from the project root (or open the `.Rproj` file and
-use the RStudio console/Build panel):
-
-```r
-source("R/01_load_data.R")     # saves data/gene_expression.rds
-source("R/02_wrangle_data.R")  # saves data/gene_expression_long.rds & gene_fc.rds
-source("R/03_summary_stats.R") # writes CSV tables to output/
-source("R/04_visualize.R")     # writes PNG figures to output/
-```
-
-### What each script does
-
-| Script | Key tidyverse functions used |
-|---|---|
-| `01_load_data.R` | `read_csv()`, `glimpse()`, `count()` |
-| `02_wrangle_data.R` | `pivot_longer()`, `mutate()`, `str_starts()`, `group_by()`, `summarise()`, `pivot_wider()`, `case_when()` |
-| `03_summary_stats.R` | `group_by()`, `summarise()`, `slice_max()`, `slice_min()`, `write_csv()` |
-| `04_visualize.R` | `ggplot2`, `geom_boxplot()`, `geom_tile()`, `geom_point()`, `geom_col()`, `scale_fill_gradient2()`, `prcomp()`, `ggsave()` |
+* data wrangling
+* exploratory data analysis
+* tidy data principles
+* biological data interpretation
+* reproducible research workflows.
 
 ---
 
-## R Markdown report
+# Project Goals
 
-Open `reports/gene_expression_report.Rmd` in RStudio and click **Knit** to
-produce a self-contained HTML report that walks through every analysis step
-with narrative, code, tables, and figures.
+This repository was created as a learning exercise to:
 
----
-
-## Requirements
-
-```r
-install.packages(c("tidyverse", "ggrepel", "here", "knitr", "rmarkdown"))
-```
-
-- R ≥ 4.1  
-- tidyverse ≥ 2.0  
-- ggrepel ≥ 0.9  
-- here ≥ 1.0  
+* Practice using the **tidyverse workflow in R**
+* Understand how **biological datasets are structured**
+* Apply **data wrangling techniques to messy experimental data**
+* Generate interpretable summary statistics for gene expression
+* Build a clear and reproducible project structure suitable for collaborative research.
 
 ---
 
-## Output files
+# Technologies Used
 
-After running all scripts the `output/` directory will contain:
+This project uses **R** and several packages from the **tidyverse**.
 
-| File | Description |
-|---|---|
-| `sample_summary.csv` | Mean, median, SD per sample |
-| `gene_summary.csv` | CV-ranked gene variability table |
-| `gene_foldchange.csv` | Log2FC, direction for all genes |
-| `01_boxplot_samples.png` | Expression distribution boxplots |
-| `02_volcano_plot.png` | Volcano plot (Treatment vs Control) |
-| `03_heatmap_top20.png` | Heatmap of top 20 variable genes |
-| `04_pca_plot.png` | PCA of sample expression profiles |
-| `05_deg_bar_biotype.png` | DEG counts by gene biotype |
+Key packages include:
+
+* **dplyr** – data manipulation and summarization
+* **tidyr** – reshaping datasets
+* **ggplot2** – visualization
+* **pheatmap** – heatmap generation for gene expression data.
 
 ---
 
-## License
+# Dataset Overview
 
-[MIT](LICENSE)
+The repository uses an **AI-generated gene expression dataset** simulating a small transcriptomics experiment.
+
+Expression data includes intentionally messy elements such as:
+
+* missing values
+* uneven sample sizes
+* variability across experimental conditions.
+
+This allows practice with **realistic data cleaning challenges** commonly encountered in biological research.
+
+---
+
+# Example Results
+
+Example gene summary output:
+
+| gene_id  | mean_expr | variance | n_na |
+| -------- | --------- | -------- | ---- |
+| GENE_001 | 592       | 165253   | 0    |
+| GENE_003 | 1274      | 1181     | 0    |
+| GENE_007 | 2.08      | 0.022    | 0    |
+
+Interpretation:
+
+* **GENE_003** shows very high expression across samples
+* **GENE_001** has extremely high variance, suggesting strong changes between control and treatment samples
+* **GENE_007** shows very low expression and minimal variability.
+
+These patterns mimic typical biological behaviors seen in transcriptomics experiments.
+
+---
+
+# Key Learning Outcomes
+
+Through this project I practiced:
+
+### Data Wrangling
+
+* filtering datasets
+* reshaping data
+* grouping and summarizing observations.
+
+### Tidy Data Principles
+
+Understanding how to structure data so each:
+
+* variable forms a column
+* observation forms a row
+* value occupies a single cell.
+
+### Biological Data Interpretation
+
+Learning how summary statistics can reveal:
+
+* differential expression
+* gene stability
+* potential experimental effects.
+
+### Reproducible Research
+
+Organizing analysis scripts and data files in a clear project structure.
+
+
+---
+
+# Who This Repository Is For
+
+This project may be useful for:
+
+* students learning **R for bioinformatics**
+* beginners exploring **tidyverse workflows**
+* researchers interested in **data wrangling biological datasets**
+* anyone curious about **reproducible computational biology practices**.
